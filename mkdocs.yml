@@ -11,7 +11,6 @@ nav:
 - 10 Domain:
   - WorkOrder FSM: 10-domain/01-workorder-fsm.md
   - 체크리스트/완료 정책: 10-domain/02-checklist-policy.md
-  - 체크리스트 템플릿 표준: 10-domain/03-checklist-templates.md
   - Org/Team 프로필: 10-domain/05-org-team-profile.md
   - 상품 카탈로그 정책 (Gate 2 후보): 10-domain/06-product-catalog-policy.md
 - 20 Product:
