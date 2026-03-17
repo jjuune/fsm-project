@@ -1,42 +1,27 @@
-site_name: Phase1 문서(v0.2)
+site_name: FSM Project Documentation
 theme:
   name: material
+  palette:
+    primary: indigo
+    accent: blue
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.follow
+
 nav:
-- 00 Overview:
-  - Phase 1 SSoT: 00-overview/00-phase1-functional-spec.md
-  - 프로젝트 정의: 00-overview/01-project.md
-  - 역할과 책임(RBAC): 00-overview/02-roles.md
-  - 범위(In/Out): 00-overview/03-scope.md
-  - 가정/리스크: 00-overview/04-assumptions-risks.md
-  - 프로젝트 로드맵: 00-overview/05-phase-roadmap.md
-- 10 Domain:
-  - WorkOrder FSM: 10-domain/01-workorder-fsm.md
-  - 체크리스트/완료 정책: 10-domain/02-checklist-policy.md
-  - Org/Team 프로필: 10-domain/05-org-team-profile.md
-  - 상품 카탈로그 정책 (Gate 2 후보): 10-domain/06-product-catalog-policy.md
-- 20 Product:
-  - 권한 매트릭스(RBAC Matrix): 20-product/00-rbac.md
-  - 로그인/홈(랜딩): 20-product/00-auth-and-home.md
-  - 화면 지도: 20-product/01-screen-map.md
-  - Admin: 20-product/02-admin.md
-  - A-00 Admin 대시보드: 20-product/11-a00-admin-dashboard.md
-  - A-01 팀 관리: 20-product/10-a01-team-management.md
-  - Team Manager: 20-product/03-team-manager.md
-  - T-00 팀 대시보드: 20-product/21-t00-team-dashboard.md
-  - T-04 기사 관리: 20-product/20-t04-technician-management.md
-  - Technician: 20-product/04-technician.md
-  - M-01 기사 작업 목록 : 20-product/05-m01-spec.md
-- 30 Implementation:
-  - Architecture Overview: 30-implementation/01-architecture-overview.md
-  - M-02 통합 스펙: 30-implementation/02-m02-spec.md
-  - M-02 컴포넌트/리스크: 30-implementation/03-m02-components-risk.md
-  - API(WorkOrder): 30-implementation/04-api.md
-  - CRUD 매트릭스: 30-implementation/05-crud-matrix.md
-  - API 최소세트(Phase 1): 30-implementation/10-api-minimum-set-phase1.md
-- 40 Data:
-  - ERD + Field Dictionary: 40-data/01-erd.md
-- 90 Appendix:
-  - 용어집: 90-appendix/01-glossary.md
-  - 변경 이력: 90-appendix/02-changelog.md
-  - 용어/문구 세트: 90-appendix/03-copy.md
-  - 이슈 라벨 가이드: 90-appendix/04-labels.md
+  - 🚀 Home: index.md
+  - 🎯 Core Domain:
+      - WorkOrder (The Core): 00-core/01-workorder.md
+  - 👥 Supporting Domains:
+      - Org & Users: 10-domain/10-org-user.md
+      - Checklist & Products: 10-domain/20-checklist-product.md
+  - 🏗️ Architecture:
+      - ERD Overview: 20-architecture/10-erd-overview.md
+      - DBML Diagram: 20-architecture/20-erd-diagram.dbml
+      - FSM Logic: 20-architecture/30-state-transition-logic.md
+  - 🔌 API Interface:
+      - API Contract: 30-api/10-api-contract.md
+  - 📦 Archive:
+      - Original Spec: _archive/v0_original_spec/00-overview/00-phase1-functional-spec.md
+      - Legacy README: _archive/v0_business_drafts/README_legacy.md

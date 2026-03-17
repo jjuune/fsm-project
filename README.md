@@ -45,9 +45,10 @@ Admin → WorkOrder 생성
 │   ├── frontend/       # React Frontend
 │   └── backend/        # Node.js API Backend
 ├── docs/               # System & Business Documentation
-│   ├── 10-architecture/ # Core Logic & DB Schema (FSM, ERD)
-│   ├── 20-interface/    # API Contracts & UI Mapping
-│   ├── 30-domain/       # Business Rules & Policies
+│   ├── 00-core/         # Core Domain (WorkOrder)
+│   ├── 10-domain/       # Supporting Domains (Org, Checklist)
+│   ├── 20-architecture/ # Engineering Spec (FSM, ERD)
+│   ├── 30-api/          # API Interface (Contracts)
 │   └── _archive/        # Legacy Drafts & History
 └── README.md           # This file (Engineering Hub)
 ```
@@ -69,15 +70,15 @@ Admin → WorkOrder 생성
 
 상세한 설계 및 요구사항은 아래 문서들을 참조하십시오.
 
-*   **[Core Architecture]**
-    *   [WorkOrder FSM (State Model)](docs/10-architecture/01-workorder-fsm.md)
-    *   [Database Schema & ERD](docs/10-architecture/02-database-schema.md)
-*   **[Interface & Specs]**
-    *   [API Contract & Security](docs/20-interface/01-api-contract.md)
-    *   [UI Component & Routing Map](docs/20-interface/02-frontend-routing.md)
+*   **[Core Strategy]**
+    *   [01-workorder (Core Domain)](docs/00-core/01-workorder.md)
+*   **[Engineering Spec]**
+    *   [10-erd-overview (Database)](docs/20-architecture/10-erd-overview.md)
+    *   [20-erd-diagram (DBML)](docs/20-architecture/20-erd-diagram.dbml)
+    *   [30-state-transition-logic (FSM)](docs/20-architecture/30-state-transition-logic.md)
 *   **[Business & History]**
-    *   [Phase 1 SSoT (Single Source of Truth)](docs/30-domain/00-phase1-functional-spec.md)
     *   [Archive: Legacy Business Drafts](docs/_archive/v0_business_drafts/README_legacy.md)
+    *   [Archive: Original Phase 1 Spec](docs/_archive/v0_original_spec/00-overview/00-phase1-functional-spec.md)
 
 ---
 
