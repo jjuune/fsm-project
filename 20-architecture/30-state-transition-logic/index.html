@@ -1,0 +1,1594 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../20-erd-diagram.dbml">
+      
+      
+        <link rel="next" href="../../_archive/v0_original_spec/00-overview/00-phase1-functional-spec/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>FSM Logic - FSM Project Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#30-state-transition-logic-fsm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="FSM Project Documentation" class="md-header__button md-logo" aria-label="FSM Project Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FSM Project Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FSM Logic
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🚀 Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../00-core/01-workorder/" class="md-tabs__link">
+          
+  
+  
+  🎯 Core Domain
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../10-domain/10-org-user.md" class="md-tabs__link">
+          
+  
+  
+  👥 Supporting Domains
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../10-erd-overview/" class="md-tabs__link">
+          
+  
+  
+  🏗️ Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../30-api/10-api-contract.md" class="md-tabs__link">
+          
+  
+  
+  🔌 API Interface
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../_archive/v0_original_spec/00-overview/00-phase1-functional-spec/" class="md-tabs__link">
+          
+  
+  
+  📦 Archive
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FSM Project Documentation" class="md-nav__button md-logo" aria-label="FSM Project Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FSM Project Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 Core Domain
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎯 Core Domain
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-core/01-workorder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkOrder (The Core)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    👥 Supporting Domains
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    👥 Supporting Domains
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-domain/10-org-user.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Org & Users
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-domain/20-checklist-product.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checklist & Products
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏗️ Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🏗️ Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-erd-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ERD Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-erd-diagram.dbml" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DBML Diagram
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSM Logic
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSM Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview (개요)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Overview (개요)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fsm-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 FSM Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-transition-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Transition Matrix (전이 허용 행렬)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-detailed-logic-per-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Detailed Logic per State (상태별 상세 규칙)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Detailed Logic per State (상태별 상세 규칙)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 CREATED (생성)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-assigned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 ASSIGNED (배정 완료)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-in_progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 IN_PROGRESS (수행 중)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-completed-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 COMPLETED (작업 완료 - 중요)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-incomplete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 INCOMPLETE (작업 미완료/보류)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-canceled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 CANCELED (작업 취소)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-exception-rollback-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Exception &amp; Rollback Policy (예외 및 롤백 정책)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-implementation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Implementation Strategy (구현 전략)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-api-mapping-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. API Mapping Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔌 API Interface
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔌 API Interface
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../30-api/10-api-contract.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📦 Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📦 Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_archive/v0_original_spec/00-overview/00-phase1-functional-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Original Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_archive/v0_business_drafts/README_legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legacy README
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview (개요)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Overview (개요)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fsm-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 FSM Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-transition-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Transition Matrix (전이 허용 행렬)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-detailed-logic-per-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Detailed Logic per State (상태별 상세 규칙)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Detailed Logic per State (상태별 상세 규칙)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 CREATED (생성)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-assigned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 ASSIGNED (배정 완료)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-in_progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 IN_PROGRESS (수행 중)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-completed-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 COMPLETED (작업 완료 - 중요)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-incomplete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 INCOMPLETE (작업 미완료/보류)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-canceled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 CANCELED (작업 취소)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-exception-rollback-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Exception &amp; Rollback Policy (예외 및 롤백 정책)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-implementation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Implementation Strategy (구현 전략)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-api-mapping-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. API Mapping Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="30-state-transition-logic-fsm">30-state-transition-logic (FSM)</h1>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li><strong>핵심:</strong> 상태 전이는 사전에 정의된 '허용된 경로'로만 이동 가능함.</li>
+<li><strong>검증:</strong> <code>COMPLETED</code> 상태는 서버 사이드에서 증빙(체크리스트/서명)을 완벽히 검증한 후 확정함.</li>
+<li><strong>예외:</strong> <code>ADMIN_OVERRIDE</code>를 통해 제한적인 롤백을 허용하되, 모든 이력은 감사 로그로 남김.</li>
+</ul>
+<hr />
+<h2 id="1-overview">1. Overview (개요)</h2>
+<p>본 시스템의 WorkOrder는 엄격한 <strong>Finite State Machine(FSM)</strong> 모델을 따릅니다.<br />
+이는 잘못된 상태 변경으로 인한 데이터 오염을 방지하고, 작업의 생애주기를 투명하게 관리하기 위함입니다. 모든 상태 변경은 <code>workorder_histories</code> 테이블에 기록되어야 합니다.</p>
+<h3 id="fsm-diagram">📊 FSM Diagram</h3>
+<pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; CREATED
+
+    CREATED --&gt; ASSIGNED
+    CREATED --&gt; CANCELED
+
+    ASSIGNED --&gt; IN_PROGRESS
+    ASSIGNED --&gt; CANCELED
+
+    IN_PROGRESS --&gt; COMPLETED
+    IN_PROGRESS --&gt; INCOMPLETE
+    IN_PROGRESS --&gt; CANCELED
+
+    INCOMPLETE --&gt; ASSIGNED
+    INCOMPLETE --&gt; CANCELED
+
+    COMPLETED --&gt; [*]
+    CANCELED --&gt; [*]
+</code></pre>
+<hr />
+<h2 id="2-transition-matrix">2. Transition Matrix (전이 허용 행렬)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">출발 상태 (From)</th>
+<th style="text-align: left;">도착 상태 (To)</th>
+<th style="text-align: left;">수행 주체 (Actor)</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>CREATED</strong></td>
+<td style="text-align: left;"><code>ASSIGNED</code></td>
+<td style="text-align: left;">Admin</td>
+<td style="text-align: left;">팀 및 기사 배정</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>CANCELED</code></td>
+<td style="text-align: left;">Admin</td>
+<td style="text-align: left;">작업 취소</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ASSIGNED</strong></td>
+<td style="text-align: left;"><code>IN_PROGRESS</code></td>
+<td style="text-align: left;">Technician</td>
+<td style="text-align: left;">작업 시작</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>ASSIGNED</code></td>
+<td style="text-align: left;">Admin / TM</td>
+<td style="text-align: left;"><strong>기사 재배정</strong> (상태 유지, ID만 변경)</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>CANCELED</code></td>
+<td style="text-align: left;">Admin / TM</td>
+<td style="text-align: left;">작업 취소</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IN_PROGRESS</strong></td>
+<td style="text-align: left;"><code>COMPLETED</code></td>
+<td style="text-align: left;">Technician</td>
+<td style="text-align: left;"><strong>최종 완료</strong> (검증 필수)</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>INCOMPLETE</code></td>
+<td style="text-align: left;">Technician</td>
+<td style="text-align: left;"><strong>미완료/보류</strong> (사유 필수)</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>CANCELED</code></td>
+<td style="text-align: left;">Admin / TM</td>
+<td style="text-align: left;">현장 취소</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>INCOMPLETE</strong></td>
+<td style="text-align: left;"><code>ASSIGNED</code></td>
+<td style="text-align: left;">Admin / TM</td>
+<td style="text-align: left;"><strong>재작업 배정 (데이터 유지 정책 적용)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>CANCELED</code></td>
+<td style="text-align: left;">Admin / TM</td>
+<td style="text-align: left;">최종 취소</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>COMPLETED</strong></td>
+<td style="text-align: left;"><code>IN_PROGRESS</code></td>
+<td style="text-align: left;"><strong>Admin Only</strong></td>
+<td style="text-align: left;"><strong>관리자 롤백</strong> (ADMIN_OVERRIDE)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-detailed-logic-per-state">3. Detailed Logic per State (상태별 상세 규칙)</h2>
+<h3 id="31-created">3.1 CREATED (생성)</h3>
+<ul>
+<li><strong>의미:</strong> 작업 지시가 생성되었으나 담당자가 지정되지 않은 대기 상태.</li>
+<li><strong>Guard:</strong> 필수 필드(고객 정보, 제품 정보) 존재 여부 확인.</li>
+</ul>
+<h3 id="32-assigned">3.2 ASSIGNED (배정 완료)</h3>
+<ul>
+<li><strong>의미:</strong> 팀(<code>team_id</code>)과 기사(<code>technician_id</code>)가 지정된 상태.</li>
+<li><strong>Guard:</strong> <code>technician_id</code>는 Null일 수 없으며(Phase 1), 해당 기사는 <code>ACTIVE</code> 상태여야 함.</li>
+</ul>
+<h3 id="33-in_progress">3.3 IN_PROGRESS (수행 중)</h3>
+<ul>
+<li><strong>의미:</strong> 기사가 현장에 도착하여 '작업 시작'을 수행한 상태.</li>
+<li><strong>Action:</strong> <code>started_at</code> 타임스탬프 기록.</li>
+</ul>
+<h3 id="34-completed-">3.4 COMPLETED (작업 완료 - 중요)</h3>
+<ul>
+<li><strong>의미:</strong> 모든 현장 업무와 증빙 수집이 완결된 상태.</li>
+<li><strong>Guard (서버 강제 검증):</strong><ol>
+<li>해당 WorkOrder에 할당된 모든 <code>required</code> 체크리스트 항목이 응답되었는가?</li>
+<li><code>signatures</code> 테이블에 해당 작업의 고객 서명이 존재하는가?</li>
+</ol>
+</li>
+<li><strong>Action:</strong> <code>completed_at</code> 기록, 작업 결과 PDF 생성 트리거, Snapshot 데이터 최종 확정.</li>
+</ul>
+<h3 id="35-incomplete">3.5 INCOMPLETE (작업 미완료/보류)</h3>
+<ul>
+<li><strong>의미:</strong> 방문했으나 고객 부재, 환경 부적합 등으로 작업을 완료하지 못한 상태.</li>
+<li><strong>Guard:</strong> <code>incomplete_reason_type</code> 및 <code>incomplete_note</code> 입력 필수.</li>
+<li><strong>Data Policy (재작업 시):</strong><ul>
+<li><code>INCOMPLETE</code> → <code>ASSIGNED</code> 전이 시, 기존에 작성된 체크리스트, 사진, 서명 데이터는 <strong>유지</strong>됨.</li>
+<li>재방문한 기사는 기존 데이터를 확인하고 누락되거나 수정이 필요한 부분부터 작업을 재개할 수 있음.</li>
+</ul>
+</li>
+</ul>
+<h3 id="36-canceled">3.6 CANCELED (작업 취소)</h3>
+<ul>
+<li><strong>의미:</strong> 비즈니스적 사유로 인해 작업이 더 이상 진행되지 않기로 결정된 최종 상태.</li>
+<li><strong>Guard:</strong> <code>cancel_reason_type</code> 필수 입력, <code>cancel_note</code> 입력 권장.</li>
+<li><strong>특징:</strong> <strong>Terminal State</strong>. 이 상태에 도달한 WorkOrder는 더 이상 다른 상태로 전이할 수 없음.</li>
+</ul>
+<hr />
+<h2 id="4-exception-rollback-policy">4. Exception &amp; Rollback Policy (예외 및 롤백 정책)</h2>
+<p>현실적인 운영을 위해 <code>COMPLETED</code> 상태의 작업을 되돌려야 하는 경우, 다음의 엄격한 절차를 따릅니다.</p>
+<ol>
+<li><strong>권한:</strong> 오직 본사 관리자(<code>ADMIN</code>)만이 수행 가능.</li>
+<li><strong>Audit:</strong> <code>workorder_histories</code>에 <strong><code>ADMIN_OVERRIDE</code></strong> 액션 타입으로 기록하며, 수정 사유(<code>note</code>)를 반드시 남김.</li>
+<li><strong>Side Effect:</strong> 이미 생성된 PDF 리포트의 무효화 처리를 수동으로 검토해야 함.</li>
+</ol>
+<hr />
+<h2 id="5-implementation-strategy">5. Implementation Strategy (구현 전략)</h2>
+<pre><code class="language-typescript">// Pseudo-code 예시
+async function changeStatus(woId, nextStatus, actor) {
+  const wo = await db.workorders.find(woId);
+  const allowed = getAllowedTransitions(wo.status);
+
+  // 1. 경로 검증
+  if (!allowed.includes(nextStatus)) {
+    throw new Error(`Invalid transition: ${wo.status} -&gt; ${nextStatus}`);
+  }
+
+  // 2. 권한 및 로직 검증 (Guard)
+  if (nextStatus === 'COMPLETED') {
+    await validateCompletion(woId);
+  }
+
+  // 3. 관리자 개입 여부 판단
+  const actionType = (wo.status === 'COMPLETED' &amp;&amp; actor.role === 'ADMIN') 
+    ? 'ADMIN_OVERRIDE' 
+    : 'STATUS_CHANGE';
+
+  // 4. 상태 변경 및 이력 기록
+  await db.transaction(async (tx) =&gt; {
+    await tx.workorders.update(woId, { status: nextStatus });
+    await tx.histories.create({
+      work_order_id: woId,
+      from_status: wo.status,
+      to_status: nextStatus,
+      changed_by: actor.id,
+      action_type: actionType, // STATUS_CHANGE 또는 ADMIN_OVERRIDE
+      note: payload.note || null
+    });
+  });
+}
+</code></pre>
+<hr />
+<h2 id="6-api-mapping-reference">6. API Mapping Reference</h2>
+<ul>
+<li><code>POST /work-orders/{id}/assign</code> ➔ <strong>ASSIGNED</strong></li>
+<li><code>POST /work-orders/{id}/start</code> ➔ <strong>IN_PROGRESS</strong></li>
+<li><code>POST /work-orders/{id}/complete</code> ➔ <strong>COMPLETED</strong></li>
+<li><code>POST /work-orders/{id}/incomplete</code> ➔ <strong>INCOMPLETE</strong></li>
+<li><code>POST /work-orders/{id}/cancel</code> ➔ <strong>CANCELED</strong></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
