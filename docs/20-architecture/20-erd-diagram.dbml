@@ -1,0 +1,227 @@
+// ========================
+// ENUMS
+// ========================
+
+Enum work_order_type {
+  INSTALL
+  AS
+}
+
+Enum work_order_status {
+  CREATED
+  ASSIGNED
+  IN_PROGRESS
+  INCOMPLETE
+  COMPLETED
+  CANCELED
+}
+
+Enum cancel_reason_type {
+  CUSTOMER_REQUEST
+  NO_SHOW
+  TECHNICIAN_ISSUE
+  DUPLICATE
+  OTHER
+}
+
+Enum incomplete_reason_type {
+  ABSENT
+  ENVIRONMENT_ISSUE
+  MATERIAL_SHORTAGE
+  TECHNICAL_DIFFICULTY
+  OTHER
+}
+
+Enum sign_type {
+  CUSTOMER
+  TECHNICIAN
+}
+
+Enum technician_status {
+  ACTIVE
+  INACTIVE
+}
+
+Enum team_status {
+  ACTIVE
+  INACTIVE
+}
+
+Enum photo_type {
+  PRE
+  POST
+  ISSUE
+}
+
+Enum history_action_type {
+  STATUS_CHANGE
+  UPDATE_FIELD
+  ADMIN_OVERRIDE
+}
+
+Enum checklist_input_type {
+  TEXT
+  NUMBER
+  BOOLEAN
+}
+
+// ========================
+// CORE: WorkOrder
+// ========================
+
+Table work_orders {
+  id uuid [pk]
+
+  type work_order_type
+  status work_order_status
+
+  team_id uuid [null]
+  technician_id uuid [null] // Phase 2: 다중 기사 배정 시 workorder_technicians 테이블로 확장 가능
+
+  customer_name_snapshot varchar
+  customer_phone_snapshot varchar
+  address_snapshot text
+  product_name_snapshot varchar
+  product_id_snapshot uuid
+
+  scheduled_at timestamp
+  started_at timestamp [null]
+  completed_at timestamp [null]
+
+  incomplete_reason_type incomplete_reason_type [null]
+  incomplete_note text [null]
+
+  cancel_reason_type cancel_reason_type [null]
+  cancel_note text [null]
+  cancelled_at timestamp [null]
+  cancelled_by uuid [null]
+
+  created_by uuid
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp [null]
+}
+
+// ========================
+// ORGANIZATION
+// ========================
+
+Table teams {
+  id uuid [pk]
+  name varchar
+  status team_status
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table technicians {
+  id uuid [pk]
+  name varchar
+  phone varchar
+  team_id uuid
+  status technician_status
+  created_at timestamp
+  updated_at timestamp
+}
+
+// ========================
+// CHECKLIST
+// ========================
+
+Table checklist_templates {
+  id uuid [pk]
+  name varchar
+  type work_order_type
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table checklist_items {
+  id uuid [pk]
+  template_id uuid
+  label varchar
+  input_type checklist_input_type [default: 'BOOLEAN']
+  required boolean
+  sort_order integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table workorder_checklists {
+  id uuid [pk]
+  work_order_id uuid
+  template_id uuid
+  created_at timestamp
+  updated_at timestamp
+
+  Indexes {
+    (work_order_id, template_id) [unique] // 중복 템플릿 할당 방지
+  }
+}
+
+Table workorder_checklist_items {
+  id uuid [pk]
+  workorder_checklist_id uuid
+  checklist_item_id uuid
+  checked boolean [default: false]
+  value text [null]
+  checked_at timestamp [null]
+}
+
+// ========================
+// PROOF: Signatures & Photos
+// ========================
+
+Table signatures {
+  id uuid [pk]
+  work_order_id uuid
+  sign_type sign_type
+  image_url varchar
+  signed_by varchar
+  signed_at timestamp
+}
+
+Table photos {
+  id uuid [pk]
+  work_order_id uuid
+  image_url varchar
+  photo_type photo_type
+  uploaded_by uuid
+  uploaded_at timestamp
+}
+
+// ========================
+// AUDIT: Histories
+// ========================
+
+Table workorder_histories {
+  id uuid [pk]
+  work_order_id uuid
+  action_type history_action_type
+  from_status work_order_status [null]
+  to_status work_order_status [null]
+  field_name varchar [null]
+  old_value text [null]
+  new_value text [null]
+  changed_by uuid
+  changed_at timestamp
+  note text [null]
+}
+
+// ========================
+// RELATIONSHIPS
+// ========================
+
+Ref: work_orders.team_id > teams.id
+Ref: work_orders.technician_id > technicians.id
+Ref: technicians.team_id > teams.id
+
+Ref: checklist_items.template_id > checklist_templates.id
+Ref: workorder_checklists.work_order_id > work_orders.id
+Ref: workorder_checklists.template_id > checklist_templates.id
+Ref: workorder_checklist_items.workorder_checklist_id > workorder_checklists.id
+Ref: workorder_checklist_items.checklist_item_id > checklist_items.id
+
+Ref: signatures.work_order_id > work_orders.id
+Ref: photos.work_order_id > work_orders.id
+Ref: workorder_histories.work_order_id > work_orders.id

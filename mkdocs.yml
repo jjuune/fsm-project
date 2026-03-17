@@ -8,6 +8,7 @@ nav:
   - 역할과 책임(RBAC): 00-overview/02-roles.md
   - 범위(In/Out): 00-overview/03-scope.md
   - 가정/리스크: 00-overview/04-assumptions-risks.md
+  - 프로젝트 로드맵: 00-overview/05-phase-roadmap.md
 - 10 Domain:
   - WorkOrder FSM: 10-domain/01-workorder-fsm.md
   - 체크리스트/완료 정책: 10-domain/02-checklist-policy.md

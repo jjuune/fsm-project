@@ -1,38 +1,86 @@
-# Phase 1 운영툴 문서 (v0.2)
+# FSM (Field Service Management) Project
 
-이 저장소는 **공간살균기 설치·AS 내부 운영 디지털화(Phase 1)**의 요구사항/스펙/도메인 규칙을 정리한 문서입니다.
+## TL;DR
+- **목표:** 공간살균기 설치·AS 운영의 100% 디지털 전환 및 표준화
+- **핵심:** WorkOrder 중심의 상태 관리(FSM)와 데이터 무결성(Snapshot/History) 확보
+- **스택:** React (Front) + Node.js (Back) + PostgreSQL (DB)
 
-- 문서 버전: **v0.2**
-- 최초 생성: 2026-02-20 (v0.1.1)
-- 업데이트: 2026-02-23 (v0.2 — SSoT/RBAC/ERD/화면 스펙/API 최소세트 보강)
-- 목적: **처음 합류한 개발자도 별도 구두 설명 없이 구현 착수**할 수 있도록 "해야 할 일"을 구조화합니다.
+## 🧠 Core Concept
 
-## 📌 먼저 읽을 문서 (SSoT)
+FSM 시스템은 **WorkOrder 중심 시스템**입니다.
+모든 데이터와 기능은 WorkOrder의 생성, 배정, 수행, 완료 과정에 종속됩니다.
 
-> **[👉 Phase 1 기능 명세서 (SSoT)](docs/00-overview/00-phase1-functional-spec.md)**
-> 여기만 읽으면 전체 구조가 보입니다.
+### Core Flow
+Admin → WorkOrder 생성  
+→ Team 할당  
+→ Technician 배정  
+→ 작업 수행  
+→ 증빙 수집 (Checklist / Signature / Photo)  
+→ 완료 처리
+
+### Supporting Domains
+- **Team / Technician:** 작업 수행 주체
+- **Checklist:** 작업 검증 기준
+- **Product:** WorkOrder 생성 시 참조 정보
 
 ---
 
-## 빠른 착수 (개발 순서 추천)
+## 🛠 Tech Stack (Proposed)
 
-1. **도메인 규칙 확정**
-   - WorkOrder 상태(FSM) / 전이 / 완료처리 규칙
-   - [WorkOrder FSM](docs/10-domain/01-workorder-fsm.md)
-2. **인증 / 사용자 관리 구현**
-   - L-01 로그인 / H-01 역할별 랜딩 (`GET /me`)
-   - A-01 팀 관리 CRUD-lite / T-04 기사 관리 CRUD-lite
-   - [로그인/홈 스펙](docs/20-product/00-auth-and-home.md) | [API 최소세트](docs/30-implementation/10-api-minimum-set-phase1.md)
-3. **M-02(기사 작업 상세) 구현**
-   - 체크리스트/서명/사진/완료 제출 + 서버 검증 + PDF 생성 트리거
-4. **배정/조회 흐름 구현**
-   - 본사(Admin) 작업 생성/팀 배정 (A-02/A-04)
-   - 팀(TeamManager) 기사 배정 (T-01~T-03)
-5. **운영 대시보드 (MVP)**
-   - A-00 Admin 대시보드 / T-00 팀 대시보드
-6. **권한(RBAC) + API 레벨 보호**
-   - ORG/TEAM/SELF 스코프 강제, Inactive 차단
-7. **데이터 모델(ERD) + Field Dictionary 반영**
-   - Organization → Team → User Lifecycle
+본 프로젝트는 확장성과 유지보수성을 고려하여 아래의 기술 스택을 권장합니다.
 
-> 상세 내용은 좌측 내비게이션(또는 mkdocs 네비)을 따라가면 됩니다.
+*   **Frontend:** React.js (TypeScript) / Tailwind CSS (UI)
+*   **Backend:** Node.js (Express or NestJS)
+*   **Database:** PostgreSQL (Relational Data + JSONB for flexibility)
+*   **Storage:** AWS S3 (Signatures, Photos, PDF Reports)
+*   **Infrastructure:** Docker (Containerization)
+
+---
+
+## 📂 Project Structure
+
+```text
+.
+├── src/                # (Pending) Source Code
+│   ├── frontend/       # React Frontend
+│   └── backend/        # Node.js API Backend
+├── docs/               # System & Business Documentation
+│   ├── 10-architecture/ # Core Logic & DB Schema (FSM, ERD)
+│   ├── 20-interface/    # API Contracts & UI Mapping
+│   ├── 30-domain/       # Business Rules & Policies
+│   └── _archive/        # Legacy Drafts & History
+└── README.md           # This file (Engineering Hub)
+```
+
+---
+
+## 📜 Engineering Principles (Hard Rules)
+
+시스템의 무결성을 위해 모든 개발자는 아래 원칙을 반드시 준수해야 합니다.
+
+1.  **Data Preservation:** 어떠한 경우에도 데이터를 물리적으로 삭제(`DELETE`)하지 않습니다. 대신 `status='INACTIVE'` 또는 `deleted_at` 컬럼을 활용한 **Soft Delete**를 수행합니다.
+2.  **State Integrity:** 모든 워크오더의 상태 변경은 정의된 **FSM(Finite State Machine)** 규칙을 따라야 하며, 전이 시 반드시 로그(History)를 남깁니다.
+3.  **API Standard:** 모든 API 응답은 일관된 JSON 포맷을 유지해야 하며, 인증된 Scope(ORG/TEAM/SELF)에 따른 엄격한 데이터 필터링을 적용합니다.
+4.  **Proof Completion:** 완료(`COMPLETED`) 처리는 필수 체크리스트 응답, 서명 데이터, (선택 시) 사진 증빙이 서버 사이드에서 검증된 후에만 확정됩니다.
+
+---
+
+## 🧭 Documentation Links
+
+상세한 설계 및 요구사항은 아래 문서들을 참조하십시오.
+
+*   **[Core Architecture]**
+    *   [WorkOrder FSM (State Model)](docs/10-architecture/01-workorder-fsm.md)
+    *   [Database Schema & ERD](docs/10-architecture/02-database-schema.md)
+*   **[Interface & Specs]**
+    *   [API Contract & Security](docs/20-interface/01-api-contract.md)
+    *   [UI Component & Routing Map](docs/20-interface/02-frontend-routing.md)
+*   **[Business & History]**
+    *   [Phase 1 SSoT (Single Source of Truth)](docs/30-domain/00-phase1-functional-spec.md)
+    *   [Archive: Legacy Business Drafts](docs/_archive/v0_business_drafts/README_legacy.md)
+
+---
+
+## 🚀 Getting Started
+
+*(개발 환경 구축 및 실행 방법은 초기 코드 베이스 구축 시 업데이트 예정입니다.)*
